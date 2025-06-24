@@ -68,4 +68,15 @@ module mux_4_1
   // write code for 4:1 mux using only &, | and ~ operations.
 
 
+    wire se20 = ~ sel [0] & ~ sel [1] ;
+  wire se21 =   sel [0] & ~ sel [1];
+  wire se22 = ~ sel [0] &   sel [1];
+  wire se23 =   sel [0] &   sel [1];
+
+  assign y =   (d0 & {4{se20}})
+             | (d1 & {4{se21}})
+             | (d2 & {4{se22}})
+             | (d3 & {4{se23}});
+             
+
 endmodule
