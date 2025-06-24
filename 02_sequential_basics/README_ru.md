@@ -7,6 +7,8 @@
 Для формата вывода посмотрите
 `$display` в файле `testbench.sv`.
 
+![image](https://github.com/user-attachments/assets/b863bbe3-7da0-4523-a163-36ba5cb41e4d)
+
 ## 02_single_and_double_rate_fibonacci
 
 Сделайте модуль, который генерирует 2 числа Фибоначчи за такт.
