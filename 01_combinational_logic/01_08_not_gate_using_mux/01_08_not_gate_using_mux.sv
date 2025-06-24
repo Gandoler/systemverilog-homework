@@ -27,9 +27,11 @@ module not_gate_using_mux
   // Implement not gate using instance(s) of mux,
   // constants 0 and 1, and wire connections
 
- mux mux(
-  .d0(1), 
-  .d1(0),
+ wire const0 = 1'b0;
+  wire const1 = 1'b1;
+  mux mux(
+  .d0(const1), 
+  .d1(const0),
   .sel(i),
   .y(o)
   );
