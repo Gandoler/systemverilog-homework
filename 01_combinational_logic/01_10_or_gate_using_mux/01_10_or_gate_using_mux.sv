@@ -30,7 +30,7 @@ module or_gate_using_mux
   // constants 0 and 1, and wire connections
  wire const1 = 1'b1;
 
-  mux mux_a(
+  mux mux_or(
   .d0(b), 
   .d1(const1),
   .sel(a),
