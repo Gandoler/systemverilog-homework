@@ -13,6 +13,16 @@
 
 Сделайте модуль, который генерирует 2 числа Фибоначчи за такт.
 
+|этап  |num1             | num1                  | num3        |
+|------|-----------------|-----------------------|-------------|
+|1     | num1 = 1        |     num2 = 1          | num3  = 1   |
+|2     |num1 = num3 = 1  |   num2 = num3+ num2 =2| num3 = num2+ num3<<2 = 3|
+|3     | num1 = num3 = 3 |   num2 = num3+ num2 =5| num3 = num2+ num3<<2 = 8|
+|3     | num1 = num3 = 8 |   num2 = num3+ num2 =13| num3 = num2+ num3<<2 = 21|
+![image](https://github.com/user-attachments/assets/8f801461-2983-495d-b923-7adae95757b7)
+
+
+
 ## 03_serial_adder_using_logic_operations_only
 
 Напишите последовательный сумматор, используя только операторы `^` (XOR), `|` (OR),
