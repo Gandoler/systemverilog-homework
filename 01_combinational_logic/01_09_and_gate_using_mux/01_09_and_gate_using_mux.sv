@@ -30,7 +30,7 @@ module and_gate_using_mux
 
   wire const0 = 1'b0;
 
-  mux mux_a(
+  mux mux_and(
   .d0(const0), 
   .d1(b),
   .sel(a),
