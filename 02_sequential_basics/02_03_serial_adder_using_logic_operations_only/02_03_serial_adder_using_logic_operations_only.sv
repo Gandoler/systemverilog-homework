@@ -50,5 +50,17 @@ module serial_adder_using_logic_operations_only
   //
   // See the testbench for the output format ($display task).
 
-
+  logic carry;
+  wire carry_d;
+  
+  
+   always_ff @(posedge clk) begin
+     if(rst)
+       carry <= 1'b0;
+     else  
+       carry <=  carry_d;
+   end
+   
+  assign { carry_d, sum } ={((a ^ b) & carry) |  (a & b),  (a ^ b)^ carry};
+  
 endmodule
