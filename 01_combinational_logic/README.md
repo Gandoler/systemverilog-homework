@@ -46,6 +46,7 @@
 
 Сделайте логический вентиль `И` (AND), используя экземляр(ы) `mux` и константы
 `0` и `1`.
+![image](https://github.com/user-attachments/assets/1cea45b4-e390-464c-9819-af2de6b0ad7c)
 
 ## 10_or_gate_using_mux
 
