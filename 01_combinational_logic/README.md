@@ -40,6 +40,7 @@
 
 Сделайте логический вентиль `НЕ` (NOT), используя экземляр(ы) `mux` и константы
 `0` и `1`.
+![image](https://github.com/user-attachments/assets/c4cd6bd5-d111-4bd1-83d0-eb11a1f0983a)
 
 ## 09_and_gate_using_mux
 
