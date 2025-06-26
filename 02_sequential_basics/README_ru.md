@@ -107,6 +107,11 @@
 
 ![](../doc/homework2/02_08_01_double_tokens.png)
 
+
+![image](https://github.com/user-attachments/assets/9009e4cb-d715-4b73-872a-8ba146b0e2c3)
+![image](https://github.com/user-attachments/assets/17ab8a6f-6ba5-4db0-a07b-69f110726283)
+
+
 ## 09_round_robin_arbiter_with_2_requests
 
 Задание:
