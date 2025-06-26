@@ -25,6 +25,10 @@ module serial_to_parallel
     //
     // Note:
     // Check the waveform diagram in the README for better understanding.
+  logic [$clog2(width)-1:0] cnt;
+
+
+    
   always_ff @ (posedge clk or posedge rst) begin 
      if (rst) begin
        parallel_data <= 'b0;
