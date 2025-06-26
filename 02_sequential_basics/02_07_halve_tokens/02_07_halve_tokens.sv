@@ -18,7 +18,7 @@ module halve_tokens
     // Example:
     // a -> 110_011_101_000_1111
     // b -> 010_001_001_000_0101
-  enum logic[1:0]
+ enum logic[1:0]
   {
      zero       = 2'b00,
      nonzero_click1    = 2'b10,
@@ -37,7 +37,7 @@ module halve_tokens
           
         nonzero_click1: begin
           if(a) new_state = nonzero_click2;
-          if(~a) new_state = nonzero_click1;
+//          if(~a) new_state = nonzero_click1;
         end
         
         nonzero_click2: begin
@@ -48,7 +48,7 @@ module halve_tokens
   end
   
   
-  assign b = a & (state == nonzero_click2);
+  assign b = a & (state == nonzero_click1);
   
   
    always_ff @ (posedge clk)
@@ -56,6 +56,8 @@ module halve_tokens
       state <= zero;
     else
       state <= new_state;
+
+    
 
   
 
