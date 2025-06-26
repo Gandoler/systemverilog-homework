@@ -82,6 +82,7 @@
 используя конечный автомат для определения выходов.
 Старшие биты приходят первыми.
 
+![image](https://github.com/user-attachments/assets/f0436ee2-513f-476e-887a-7997a62b1d52)
 
 ## 07_halve_tokens
 
