@@ -91,6 +91,7 @@
 Временная диаграмма:
 
 ![](../doc/homework2/02_07_01_halve_tokens.png)
+![image](https://github.com/user-attachments/assets/2c348b55-8502-493c-a9f5-0322e7c4aea4)
 
 ## 08_double_tokens
 
