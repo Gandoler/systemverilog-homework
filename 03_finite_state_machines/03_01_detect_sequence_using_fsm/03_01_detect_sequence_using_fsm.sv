@@ -101,10 +101,7 @@ always_comb
       S3:      new_state = a? IDLE : S4;
       S4:      new_state = a? S5 : IDLE;
       S5:      new_state = a? S6 : IDLE;
-      S6:      new_state = a? IDLE : S3;
-      
-
-      
+      S6:      new_state = a? IDLE : S3; 
     endcase
   end
   
