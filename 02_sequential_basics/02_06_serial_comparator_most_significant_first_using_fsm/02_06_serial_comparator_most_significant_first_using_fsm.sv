@@ -94,8 +94,7 @@ module serial_comparator_most_significant_first_using_fsm
     case (state)
       st_equal       : if (~ a &   b) new_state = st_a_less_b;
                   else if (  a & ~ b) new_state = st_a_greater_b;
-      st_a_less_b : new_state = st_a_less_b;
-      st_a_greater_b : new_state = st_a_greater_b;
+
     endcase
 
     // verilator lint_on  CASEINCOMPLETE
