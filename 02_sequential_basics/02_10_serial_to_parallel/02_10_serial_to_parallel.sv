@@ -25,6 +25,18 @@ module serial_to_parallel
     //
     // Note:
     // Check the waveform diagram in the README for better understanding.
-
+  always_ff @ (posedge clk or posedge rst) begin 
+     if (rst) begin
+       parallel_data <= 'b0;
+       cnt <= 'b0;
+       end
+     else if (serial_valid) begin
+       cnt <= cnt + 'b1;
+       parallel_data <= { serial_data,  parallel_data[width - 1 : 1] };
+       end
+       
+     parallel_valid <= (cnt == (width-1)) & serial_valid;
+        
+  end
 
 endmodule
