@@ -121,4 +121,6 @@ module serial_comparator_most_significant_first_using_fsm
       state <= new_state;
 
 
+
+
 endmodule
