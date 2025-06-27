@@ -66,7 +66,7 @@ module signed_or_unsigned_mul
       else  out =  a * b;
     end
 
-  assign res =signed_mul?  (a[n - 1] ^ b[n - 1])? (~out+1):out :out;
+   assign res =signed_mul?  ((a[n - 1] ^ b[n - 1])? (~out+1) : out) :out;
   
   
 endmodule
