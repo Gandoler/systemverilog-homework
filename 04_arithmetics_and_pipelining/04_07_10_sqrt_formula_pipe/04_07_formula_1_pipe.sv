@@ -41,6 +41,65 @@ module formula_1_pipe
     // in the article by Yuri Panchul published in
     // FPGA-Systems Magazine :: FSM :: Issue ALFA (state_0)
     // You can download this issue from https://fpga-systems.ru/fsm#state_0
+     logic        isqrt_1_y_vld;
+    logic [15:0] isqrt_1_y;
+    
+    logic        isqrt_2_y_vld;
+    logic [15:0] isqrt_2_y;
+    
+    logic        isqrt_3_y_vld;
+    logic [15:0] isqrt_3_y;
+    
+    logic        res_vld_comb;
+    logic [31:0] res_comb;
+    
+    
+    always_ff @ (posedge clk)
+    if (rst)
+        res_vld_comb <= '0;
+    else
+        res_vld_comb <= (isqrt_1_y_vld & isqrt_2_y_vld & isqrt_3_y_vld );
+    
+    
+    always_ff @ (posedge clk)
+    if (rst)
+        res_comb <= '0;
+    else if (isqrt_1_y_vld & isqrt_2_y_vld & isqrt_3_y_vld )
+        res_comb <= isqrt_3_y + isqrt_2_y + isqrt_1_y;
+    
+    
+    assign res = res_comb;
+    assign res_vld = res_vld_comb;
+    
+    
+    isqrt isqrt_1
+    (
+       .clk(clk),
+       .rst(rst),
+       .x_vld(arg_vld),
+       .x(a),
+       .y_vld(isqrt_1_y_vld),
+       .y(isqrt_1_y)
+    );
+    
+    isqrt isqrt_2
+    (
+       .clk(clk),
+       .rst(rst),
+       .x_vld(arg_vld),
+       .x(b),
+       .y_vld(isqrt_2_y_vld),
+       .y(isqrt_2_y)
+    );
+    isqrt isqrt_3
+    (
+       .clk(clk),
+       .rst(rst),
+       .x_vld(arg_vld),
+       .x(c),
+       .y_vld(isqrt_3_y_vld),
+       .y(isqrt_3_y)
+    );
 
 
 endmodule
