@@ -60,6 +60,78 @@ module formula_1_pipe_aware_fsm
     // in the article by Yuri Panchul published in
     // FPGA-Systems Magazine :: FSM :: Issue ALFA (state_0)
     // You can download this issue from https://fpga-systems.ru/fsm#state_0
+    enum logic[2:0]{
+      IDLE   = 3'd0,
+      SEND_a = 3'd1,
+      SEND_b = 3'd2,
+      SEND_c = 3'd3,
+      GET_a  = 3'd4,
+      GET_b  = 3'd5,
+      GET_c  = 3'd6    
+    }
+    state, new_state;
+    always_ff @ (posedge clk)
+      if (rst)
+          state <= IDLE;
+      else
+          state <= new_state;
+    
+    
+    always_comb begin
+      new_state = state;
+      
+      case(state)
+        IDLE    : if(arg_vld) new_state = SEND_a;
+        SEND_a  :             new_state = SEND_b;
+        SEND_b  :             new_state = SEND_c;
+        SEND_c  : if(isqrt_y) new_state = GET_a;
+        GET_a   :             new_state = GET_b;
+        GET_b   :             new_state = GET_c;
+        GET_c   :             new_state = IDLE;
+      endcase
+    end 
+    
+    
+    always_comb begin
+      isqrt_x_vld = 1'b0;
+      case(state) 
+       IDLE     : if(arg_vld) isqrt_x_vld = 1'b1;   
+       SEND_a   :             isqrt_x_vld = 1'b1;
+       SEND_b   :             isqrt_x_vld = 1'b1;
+//       SEND_c   :             isqrt_x_vld = 1'b1;
+      endcase
+    end
+    
+    
+    always_comb
+    begin
+        isqrt_x = 1'b0;  // Don't care
+
+        case (state)
+        IDLE   :   isqrt_x = a;
+        SEND_a   :   isqrt_x = b;
+        SEND_b   :   isqrt_x = c;
+        endcase
+    end
+    
+   
+
+
+    always_ff @ (posedge clk)
+        if (rst)
+            res_vld <= '0;
+        else
+            res_vld <= (state == GET_c );
+
+   
+
+
+    always_ff @ (posedge clk)
+        if (state == IDLE)
+            res <= '0;
+        else if (isqrt_y_vld)
+                res <= res + isqrt_y;
+      
 
 
 endmodule
