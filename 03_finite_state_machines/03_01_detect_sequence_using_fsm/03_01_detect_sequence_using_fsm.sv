@@ -95,13 +95,13 @@ always_comb
     // verilator lint_off CASEINCOMPLETE
 
     case (state)
-      IDLE:    new_state = a? S1 : IDLE;
-      S1:      new_state = a? S2 : IDLE;
-      S2:      new_state = a? IDLE : S3;
-      S3:      new_state = a? IDLE : S4;
-      S4:      new_state = a? S5 : IDLE;
-      S5:      new_state = a? S6 : IDLE;
-      S6:      new_state = a? IDLE : S3; 
+      IDLE:    if(a) new_state = S1;   else new_state = IDLE;
+      S1:      if(a) new_state = S2;   else new_state = IDLE;
+      S2:      if(a) new_state = IDLE; else new_state = S3;
+      S3:      if(a) new_state = IDLE; else new_state = S4;
+      S4:      if(a) new_state = S5;   else new_state = IDLE;
+      S5:      if(a) new_state = S6;   else new_state = IDLE;
+      S6:      if(a) new_state = IDLE; else new_state = S3;
     endcase
   end
   
