@@ -41,7 +41,7 @@ module formula_2_pipe
     // in the article by Yuri Panchul published in
     // FPGA-Systems Magazine :: FSM :: Issue ALFA (state_0)
     // You can download this issue from https://fpga-systems.ru/fsm#state_0
-      logic        isqrt_1_y_vld;
+    logic        isqrt_1_y_vld;
     logic [15:0] isqrt_1_y;
     
     logic        isqrt_2_y_vld;
@@ -81,7 +81,7 @@ module formula_2_pipe
   );
   
   
-  shift_register_with_valid # (.width(width), .depth(2*isqrt_latency + 1)) shift_register_2
+  shift_register_with_valid # (.width(width), .depth(2 * isqrt_latency + 1)) shift_register_2
   (
      .clk(clk),
      .rst(rst),
@@ -100,7 +100,7 @@ isqrt isqrt_1
        .clk(clk),
        .rst(rst),
        .x_vld(arg_vld),
-       .x(a),
+       .x(c),
        .y_vld(isqrt_1_y_vld),
        .y(isqrt_1_y)
     );
@@ -109,7 +109,7 @@ isqrt isqrt_1
     (
        .clk(clk),
        .rst(rst),
-       .x_vld(arg_vld),
+       .x_vld(sum_1_en),
        .x(sum1_reg),
        .y_vld(isqrt_2_y_vld),
        .y(isqrt_2_y)
@@ -118,7 +118,7 @@ isqrt isqrt_1
     (
        .clk(clk),
        .rst(rst),
-       .x_vld(arg_vld),
+       .x_vld(sum_2_en),
        .x(sum2_reg),
        .y_vld(isqrt_3_y_vld),
        .y(isqrt_3_y)
@@ -126,28 +126,40 @@ isqrt isqrt_1
     
     
     
-    assign res_vld = isqrt_3_y_vld;
-    assign res     = isqrt_3_y;
+    // ответ
+   
+    assign    res_vld = isqrt_3_y_vld;
+    assign    res     = isqrt_3_y;
+    
+    
+
     
     // первый регистр с en
     always_ff @(posedge clk) begin
-      if (rst) 
+      if (rst) begin
         sum_1_en <= '0;
-      else if(~rst)
-        sum_1_en <= shift_register_1_valid;
-      else if (sum_1_en)
+        sum1_reg <= '0;
+      end
+      else if(~rst) 
+        sum_1_en <= isqrt_1_y_vld;
+     end
+     always_ff @(posedge clk) begin
+      if (isqrt_1_y_vld)
         sum1_reg <= shift_register_1_data + isqrt_1_y;
      end
      
      // второй регистр с en
     always_ff @(posedge clk) begin
-      if (rst) 
+      if (rst) begin
         sum_2_en <= '0;
+        sum2_reg <= '0;
+      end
       else if(~rst)
-        sum_2_en <= shift_register_2_valid;
-      else if (sum_2_en)
+        sum_2_en <= isqrt_2_y_vld;
+     end
+     always_ff @(posedge clk) begin
+      if (isqrt_2_y_vld)
         sum2_reg <= shift_register_2_data + isqrt_2_y;
      end
-    
 
 endmodule
