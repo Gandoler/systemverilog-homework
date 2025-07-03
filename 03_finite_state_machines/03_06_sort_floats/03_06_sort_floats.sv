@@ -114,22 +114,22 @@ module sort_three_floats (
     );
     
      always_comb
-      if (u1_less_or_equal_u2)
-            if (u0_less_or_equal_u1)
-                sorted = unsorted;
-            else
-                if (u0_less_or_equal_u2)
-                    {   sorted [0],   sorted [1], sorted [2] } = { unsorted [1], unsorted [0], unsorted[2] };
-                else 
-                    {   sorted [0],   sorted [1], sorted [2] } = { unsorted [1], unsorted [2], unsorted[0] };
-        else
-            if (~u0_less_or_equal_u1)
-                {   sorted [0],   sorted [1], sorted [2] } = { unsorted [2], unsorted [1], unsorted[0] };
-            else
-                if (u0_less_or_equal_u2)
-                    {   sorted [0],   sorted [1], sorted [2] } = { unsorted [0], unsorted [2], unsorted[1] };
-                else 
-                    {   sorted [0],   sorted [1], sorted [2] } = { unsorted [2], unsorted [0], unsorted[1] };
+       if (u1_less_or_equal_u2)
+         if (u0_less_or_equal_u1)
+           sorted = unsorted;
+         else
+           if (u0_less_or_equal_u2)
+             {   sorted [0],   sorted [1], sorted [2] } = { unsorted [1], unsorted [0], unsorted[2] };
+           else 
+             {   sorted [0],   sorted [1], sorted [2] } = { unsorted [1], unsorted [2], unsorted[0] };
+       else
+         if (u0_less_or_equal_u1)
+           if (u0_less_or_equal_u2)
+             {   sorted [0],   sorted [1], sorted [2] } = { unsorted [0], unsorted [2], unsorted[1] };
+           else 
+             {   sorted [0],   sorted [1], sorted [2] } = { unsorted [2], unsorted [0], unsorted[1] };
+         else
+           {   sorted [0],   sorted [1], sorted [2] } = { unsorted [2], unsorted [1], unsorted[0] };
 
 
 
