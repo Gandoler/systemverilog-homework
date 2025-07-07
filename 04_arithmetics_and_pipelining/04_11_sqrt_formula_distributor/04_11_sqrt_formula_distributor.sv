@@ -42,11 +42,10 @@ module sqrt_formula_distributor
     // Hint:
     // Instantiate sufficient number of "formula_1_impl_1_top", "formula_1_impl_2_top",
     // or "formula_2_top" modules to achieve desired performance.
-     localparam N = 50;
+    localparam N = 50;
     
     logic [6:0]   counter;
-    logic [N-1:0] idx_array;
-    
+        
     logic [31:0]  a_array         [0 : N-1];
     logic [31:0]  b_array         [0 : N-1];
     logic [31:0]  c_array         [0 : N-1];
@@ -59,32 +58,39 @@ module sqrt_formula_distributor
     
     
     always_ff @(posedge clk) begin
-      if(rst) counter        <= 'b0;
-      else if(arg_vld) begin
-        counter              <= (counter == N-1) ? 'b0: counter + 'b1;
-        idx_array[counter-1] <= 0;
-        idx_array[counter]   <= 1;
+      if(rst) 
+        counter  <= 'b0;
+      else 
+      if(arg_vld) begin
+        counter  <= (counter == N-1) ? 'b0: counter + 'b1;
       end
     end
     
     
     always_ff @(posedge clk) begin
-      if(arg_vld & idx_array[counter]) begin
-        a_array[counter] <= a;  
-        b_array[counter] <= b;
-        c_array[counter] <= c;
+      for(int j = 0; j < N ; j++) begin
+        if(arg_vld & (j == counter)) begin
+          a_array[j] <= a;  
+          b_array[j] <= b;
+          c_array[j] <= c;
+        end
       end
     end
     
     
     always_ff @(posedge clk) begin
       if (rst) begin
-        vld_array <= 'b0;
+        vld_array <= N'(0);
       end
-      else if(idx_array[counter]) begin
-        vld_array[counter-1] <= 0;
-        vld_array[counter]   <= 1;
-      end
+      else begin
+        for(int j = 0; j < N ; j++) begin
+          if(j == counter &  arg_vld) 
+            vld_array[j] <=  'b1;  // вот тут у меня просто присваивалась еденица, и из-за этого я потратил 2 часа !! запомнить 
+                                      // если каунтер и равен нужному это же не значит что аргумнты валидны  
+          else 
+            vld_array[j] <= 'b0;
+        end
+      end 
     end
     
     genvar i;
@@ -93,7 +99,7 @@ module sqrt_formula_distributor
       for(i = 0; i < N; i++) begin
         if (formula == 1) begin
           if (impl == 1)begin
-            formula_1_impl_1_top formula_1_impl_1_top_i
+            formula_1_impl_1_top formula_top_i
             (
                .clk(clk),
                .rst(rst),
@@ -108,7 +114,7 @@ module sqrt_formula_distributor
             );
           
           end else if (impl == 2) begin
-            formula_1_impl_2_top formula_1_impl_2_top_i
+            formula_1_impl_2_top formula_top_i
             (
                 .clk(clk),
                 .rst(rst),
@@ -125,7 +131,7 @@ module sqrt_formula_distributor
           end
           
         end else if (formula == 2) begin
-          formula_2_top formula_2_top_i
+          formula_2_top formula_top_i
           (
               .clk(clk),
               .rst(rst),
@@ -144,17 +150,14 @@ module sqrt_formula_distributor
     endgenerate 
     
     
-    assign res_vld = | res_vld_array;
-    logic res_comb;
+    logic [31:0] res_comb;
+    assign res_vld = |res_vld_array;
     assign res = res_comb;
-    
-    always_comb begin
-      for(int j = 0; j < N; j++ ) begin
-        if (res_vld_array[j]) begin
-          res_comb = res_array[j];
-        end
-      end
-    end
+    always_comb
+        for (int j = 0; j < N; j++)
+            if (res_vld_array[j]) begin
+                res_comb = res_array[j];
+            end
 
 
 endmodule
